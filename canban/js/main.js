@@ -128,7 +128,7 @@ new Vue({
             const card = this[column][index];
             this.editedCardTitle = card.title;
             this.editedCardDescription = card.description;
-            this.editedCardDeadline = card.deadline.toISOString().slice(0, 16);
+            this.editedCardDeadline = card.deadline;
 
             this.openModal('editCardModal');
         },
