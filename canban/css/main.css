@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'Inter-Regular';
+    src: url('../fonts/Inter_18pt-Regular.ttf');
+}
+
+* {
+    font-family: 'Inter-Regular';
+}
+
+.columns {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.column {
+    width: 25%;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.column.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.card > p, .card > h3 {
+    word-break: break-all;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+li.completed {
+    text-decoration: line-through;
+    color: #666;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+#addCardModal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-card-form {
+    width: 30%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-card-form input, .add-card-form textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.add-card-form button {
+    width: 100%;
+}
+
+.delete-card-button {
+    background-color: #ff2e41;
+}
+
+.delete-card-button:hover {
+    background-color: #ce1524;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.search-form > h2 {
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-header button {
+    width: 80px;
+    height: 35px;
+}
+
+.date-input-label {
+    margin-left: 10px;
+}
+
+.date-input-label input {
+    margin-top: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+#editCardModal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.edit-card-form {
+    width: 30%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-card-form input, .edit-card-form textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-card-form button {
+    width: 100%;
+}

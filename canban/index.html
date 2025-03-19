@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приложение для заметок</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="app">
+    <button @click="clearAllData">Очистить все данные</button>
+    <button @click="openModal('addCardModal')">Добавить новую карточку</button>
+
+    <div id="addCardModal">
+        <div class="add-card-form">
+            <div class="modal-header">
+                <h2>Добавить новую карточку</h2>
+                <button @click="closeModal('addCardModal')" class="close-modal-button">Закрыть</button>
+            </div>
+            <input v-model="newCardTitle" placeholder="Название задачи" />
+            <textarea v-model="newCardDescription" placeholder="Описание задачи"></textarea>
+            <label class="date-input-label">Дедлайн<input v-model="newCardDeadline" type="datetime-local"></label>
+            <button @click="addCard">Добавить карточку</button>
+        </div>
+    </div>
+
+    <div id="editCardModal">
+        <div class="edit-card-form">
+            <div class="modal-header">
+                <h2>Редактировать карточку</h2>
+                <button @click="closeModal('editCardModal')" class="close-modal-button">Закрыть</button>
+            </div>
+            <input v-model="editedCardTitle" placeholder="Название задачи" />
+            <textarea v-model="editedCardDescription" placeholder="Описание задачи"></textarea>
+            <label class="date-input-label">Дедлайн<input v-model="editedCardDeadline" type="datetime-local"></label>
+            <button @click="saveEditedCard">Сохранить изменения</button>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <h2>Запланированные задачи</h2>
+            <div v-for="(card, index) in firstColumn" :key="card.creationDate" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p v-if="card.lastEditedTime">Отредактировано: {{ card.lastEditedTime }}</p>
+                <button @click="deleteCard(index, 'firstColumn')" class="delete-card-button">Удалить</button>
+                <button @click="openEditModal(index, 'firstColumn')">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">=></button>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Задачи в работе</h2>
+            <div v-for="(card, index) in secondColumn" :key="card.creationDate" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <button @click="openEditModal(index, 'secondColumn')">Редактировать</button>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Тестирование</h2>
+            <div v-for="(card, index) in thirdColumn" :key="card.creationDate" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <button @click="openEditModal(index, 'thirdColumn')">Редактировать</button>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Выполненные задачи</h2>
+            <div v-for="(card, index) in fourthColumn" :key="card.creationDate" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
