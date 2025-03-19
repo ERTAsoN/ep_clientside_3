@@ -11,7 +11,7 @@
     <button @click="clearAllData">Очистить все данные</button>
     <button @click="openModal('addCardModal')">Добавить новую карточку</button>
 
-    <div id="addCardModal">
+    <div id="addCardModal" class="modal">
         <div class="add-card-form">
             <div class="modal-header">
                 <h2>Добавить новую карточку</h2>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div id="editCardModal">
+    <div id="editCardModal" class="modal">
         <div class="edit-card-form">
             <div class="modal-header">
                 <h2>Редактировать карточку</h2>
@@ -37,18 +37,29 @@
         </div>
     </div>
 
+    <div id="cardToWorkModal" class="modal">
+        <div class="edit-card-form">
+            <div class="modal-header">
+                <h2>Переместить в столбец "В работе"</h2>
+                <button @click="closeModal('cardToWorkModal')" class="close-modal-button">Закрыть</button>
+            </div>
+            <textarea v-model="cardToWorkReason" placeholder="Причина"></textarea>
+            <button @click="saveToWorkReason">Сохранить изменения</button>
+        </div>
+    </div>
+
     <div class="columns">
         <div class="column">
             <h2>Запланированные задачи</h2>
             <div v-for="(card, index) in firstColumn" :key="card.creationDate" class="card">
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
-                <p>Дата создания: {{ card.creationDate }}</p>
-                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
-                <p v-if="card.lastEditedTime">Отредактировано: {{ card.lastEditedTime }}</p>
+                <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
+                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
                 <button @click="deleteCard(index, 'firstColumn')" class="delete-card-button">Удалить</button>
                 <button @click="openEditModal(index, 'firstColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">=></button>
+                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">></button>
             </div>
         </div>
 
@@ -57,9 +68,12 @@
             <div v-for="(card, index) in secondColumn" :key="card.creationDate" class="card">
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
-                <p>Дата создания: {{ card.creationDate }}</p>
-                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
+                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
+                <p v-if="card.cardToWorkReason">Причина возврата: {{ card.cardToWorkReason }}</p>
                 <button @click="openEditModal(index, 'secondColumn')">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')">></button>
             </div>
         </div>
 
@@ -68,9 +82,12 @@
             <div v-for="(card, index) in thirdColumn" :key="card.creationDate" class="card">
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
-                <p>Дата создания: {{ card.creationDate }}</p>
-                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
+                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
                 <button @click="openEditModal(index, 'thirdColumn')">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')"><</button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')">></button>
             </div>
         </div>
 
@@ -79,8 +96,10 @@
             <div v-for="(card, index) in fourthColumn" :key="card.creationDate" class="card">
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
-                <p>Дата создания: {{ card.creationDate }}</p>
-                <p>Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
+                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
+                <p :class="{ 'red-text': card.isOverdue, 'green-text': !card.isOverdue }">{{ card.isOverdue ? 'Просрочено' : 'Сделано вовремя' }}</p>
             </div>
         </div>
     </div>

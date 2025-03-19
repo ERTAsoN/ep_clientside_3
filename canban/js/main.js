@@ -9,6 +9,7 @@ new Vue({
         editedCardDeadline: '',
         editedCardIndex: null,
         editedCardColumn: '',
+        cardToWorkReason: '',
         firstColumn: [],
         secondColumn: [],
         thirdColumn: [],
@@ -16,8 +17,21 @@ new Vue({
     },
     methods: {
         moveCardProcessor(index, column, columnTo) {
-            if (column === 'firstColumn' && column === 'secondColumn') {
+            this.card = this[column][index];
+
+            if (column === 'firstColumn' && columnTo === 'secondColumn') {
                 this.moveCard(index, column, columnTo);
+            }
+            else if (column === 'secondColumn' && columnTo === 'thirdColumn') {
+                this.moveCard(index, column, columnTo);
+            }
+            else if (column === 'thirdColumn' && columnTo === 'fourthColumn') {
+                if (this.card.deadline < new Date()) this.card.isOverdue = true;
+                this.moveCard(index, column, columnTo);
+            }
+            else if (column === 'thirdColumn' && columnTo === 'secondColumn') {
+                this.editedCardIndex = index;
+                this.openModal('cardToWorkModal');
             }
 
             this.saveDataToLocalStorage();
@@ -48,6 +62,7 @@ new Vue({
                 title: this.newCardTitle,
                 description: this.newCardDescription,
                 deadline: new Date(this.newCardDeadline),
+                isOverdue: false,
             };
 
             this.firstColumn.push(newCard);
@@ -136,14 +151,37 @@ new Vue({
             const column = this.editedCardColumn;
             const index = this.editedCardIndex;
 
-            this[column][index].title = this.editedCardTitle;
-            this[column][index].description = this.editedCardDescription;
-            this[column][index].deadline = new Date(this.editedCardDeadline);
-            this[column][index].lastEditedTime = new Date().toLocaleString();
+            this.card = this[column][index];
+
+            this.card.title = this.editedCardTitle;
+            this.card.description = this.editedCardDescription;
+            this.card.deadline = new Date(this.editedCardDeadline);
+            this.card.lastEditedTime = new Date().toLocaleString();
 
             this.saveDataToLocalStorage();
 
             this.closeModal('editCardModal');
+        },
+        saveToWorkReason() {
+            const column = 'thirdColumn';
+            const index = this.editedCardIndex;
+
+            this.card = this[column][index];
+
+            if (!this.cardToWorkReason)
+            {
+                alert("Заполните причину перемещения задачи");
+                return;
+            }
+
+            this.card.cardToWorkReason = this.cardToWorkReason;
+            this.cardToWorkReason = '';
+
+            this.moveCard(index, 'thirdColumn', 'secondColumn');
+
+            this.saveDataToLocalStorage();
+
+            this.closeModal('cardToWorkModal');
         }
     },
     mounted() {
