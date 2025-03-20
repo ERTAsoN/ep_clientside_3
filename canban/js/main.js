@@ -35,6 +35,8 @@ new Vue({
                 this.openModal('cardToWorkModal');
             }
 
+            this.checkDeadlineLock();
+
             this.saveDataToLocalStorage();
         },
         moveCard(index, fromColumn, toColumn) {
@@ -64,11 +66,14 @@ new Vue({
                 description: this.newCardDescription,
                 deadline: new Date(this.newCardDeadline),
                 isOverdue: false,
+                toWorkReasons: [],
             };
 
             this.firstColumn.push(newCard);
 
             this.closeModal('addCardModal');
+
+            this.checkDeadlineLock();
 
             this.saveDataToLocalStorage();
 
@@ -132,6 +137,11 @@ new Vue({
             localStorage.removeItem('boardData');
         },
         openModal(modalName) {
+            if (modalName === 'addCardModal' && this.deadlineLock) {
+                alert('Выполните задачи с дедлайном меньше чем 2 дня')
+                return;
+            }
+
             document.getElementById(modalName).style.display = 'block';
         },
         closeModal(modalName) {
@@ -175,7 +185,12 @@ new Vue({
                 return;
             }
 
-            this.card.cardToWorkReason = this.cardToWorkReason;
+            let reason = {
+                reason: this.cardToWorkReason,
+                date: new Date().toLocaleString(),
+            }
+
+            this.card.toWorkReasons.push(reason);
             this.cardToWorkReason = '';
 
             this.moveCard(index, 'thirdColumn', 'secondColumn');

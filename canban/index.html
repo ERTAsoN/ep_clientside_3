@@ -71,7 +71,10 @@
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
                 <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
-                <p v-if="card.cardToWorkReason">Причина возврата: {{ card.cardToWorkReason }}</p>
+                <div v-if="card.toWorkReasons.length > 0" class="to-work-reason-container">
+                    <p>Причины возврата:</p>
+                    <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
+                </div>
                 <button @click="openEditModal(index, 'secondColumn')">Редактировать</button>
                 <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')">></button>
             </div>
@@ -85,6 +88,10 @@
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
                 <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
+                <div v-if="card.toWorkReasons.length > 0" class="to-work-reason-container">
+                    <p>Причины возврата:</p>
+                    <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
+                </div>
                 <button @click="openEditModal(index, 'thirdColumn')">Редактировать</button>
                 <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')"><</button>
                 <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')">></button>
@@ -99,6 +106,10 @@
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
                 <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
+                <div v-if="card.toWorkReasons.length > 0" class="to-work-reason-container">
+                    <p>Причины возврата:</p>
+                    <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
+                </div>
                 <p :class="{ 'red-text': card.isOverdue, 'green-text': !card.isOverdue }">{{ card.isOverdue ? 'Просрочено' : 'Сделано вовремя' }}</p>
             </div>
         </div>

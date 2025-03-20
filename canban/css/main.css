@@ -180,3 +180,12 @@ textarea {
 .red-text {
     color: #dc3545;
 }
+
+.to-work-reason {
+    margin: 3px 0 3px 0;
+    color: #747;
+}
+
+.to-work-reason-container {
+    margin-bottom: 20px;
+}
