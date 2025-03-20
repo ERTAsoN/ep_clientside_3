@@ -18,7 +18,7 @@ new Vue({
     },
     methods: {
         moveCardProcessor(index, column, columnTo) {
-            this.card = this[column][index];
+            let card = this[column][index];
 
             if (column === 'firstColumn' && columnTo === 'secondColumn') {
                 this.moveCard(index, column, columnTo);
@@ -27,7 +27,7 @@ new Vue({
                 this.moveCard(index, column, columnTo);
             }
             else if (column === 'thirdColumn' && columnTo === 'fourthColumn') {
-                if (this.card.deadline < new Date()) this.card.isOverdue = true;
+                if (card.deadline < new Date()) card.isOverdue = true;
                 this.moveCard(index, column, columnTo);
             }
             else if (column === 'thirdColumn' && columnTo === 'secondColumn') {
@@ -162,12 +162,12 @@ new Vue({
             const column = this.editedCardColumn;
             const index = this.editedCardIndex;
 
-            this.card = this[column][index];
+            let card = this[column][index];
 
-            this.card.title = this.editedCardTitle;
-            this.card.description = this.editedCardDescription;
-            this.card.deadline = new Date(this.editedCardDeadline);
-            this.card.lastEditedTime = new Date().toLocaleString();
+            card.title = this.editedCardTitle;
+            card.description = this.editedCardDescription;
+            card.deadline = new Date(this.editedCardDeadline);
+            card.lastEditedTime = new Date().toLocaleString();
 
             this.saveDataToLocalStorage();
 

@@ -59,7 +59,7 @@
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
                 <button @click="deleteCard(index, 'firstColumn')" class="delete-card-button">Удалить</button>
                 <button @click="openEditModal(index, 'firstColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">></button>
+                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">&gt</button>
             </div>
         </div>
 
@@ -76,7 +76,7 @@
                     <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
                 </div>
                 <button @click="openEditModal(index, 'secondColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')">></button>
+                <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')">&gt</button>
             </div>
         </div>
 
@@ -93,8 +93,8 @@
                     <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
                 </div>
                 <button @click="openEditModal(index, 'thirdColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')"><</button>
-                <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')">></button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')">&lt</button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')">&gt</button>
             </div>
         </div>
 
