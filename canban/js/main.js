@@ -169,6 +169,8 @@ new Vue({
             card.deadline = new Date(this.editedCardDeadline);
             card.lastEditedTime = new Date().toLocaleString();
 
+            this.checkDeadlineLock();
+
             this.saveDataToLocalStorage();
 
             this.closeModal('editCardModal');
@@ -225,9 +227,15 @@ new Vue({
             }
 
             this.deadlineLock = deadlineLock;
+        },
+        isDeadlineLocked(deadline) {
+            return this.deadlineLock && !this.checkCloseDeadline(deadline);
+        },
+        isDeadlineLockReason(deadline) {
+            return this.deadlineLock && this.checkCloseDeadline(deadline);
         }
     },
     mounted() {
         this.loadDataFromLocalStorage();
-    }
+    },
 });

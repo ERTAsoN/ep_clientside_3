@@ -55,11 +55,11 @@
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
-                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text" :class="{ 'red-text': isDeadlineLockReason(card.deadline) }">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
-                <button @click="deleteCard(index, 'firstColumn')" class="delete-card-button">Удалить</button>
-                <button @click="openEditModal(index, 'firstColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')">&gt</button>
+                <button @click="deleteCard(index, 'firstColumn')" class="delete-card-button" v-if="!isDeadlineLocked(card.deadline)">Удалить</button>
+                <button @click="openEditModal(index, 'firstColumn')" v-if="!isDeadlineLocked(card.deadline)">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'firstColumn', 'secondColumn')" v-if="!isDeadlineLocked(card.deadline)">&gt</button>
             </div>
         </div>
 
@@ -69,14 +69,14 @@
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
-                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text" :class="{ 'red-text': isDeadlineLockReason(card.deadline) }">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
                 <div v-if="card.toWorkReasons.length > 0" class="to-work-reason-container">
                     <p>Причины возврата:</p>
                     <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
                 </div>
-                <button @click="openEditModal(index, 'secondColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')">&gt</button>
+                <button @click="openEditModal(index, 'secondColumn')" v-if="!isDeadlineLocked(card.deadline)">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'secondColumn', 'thirdColumn')" v-if="!isDeadlineLocked(card.deadline)">&gt</button>
             </div>
         </div>
 
@@ -86,15 +86,15 @@
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
                 <p class="secondary-text">Дата создания: {{ card.creationDate }}</p>
-                <p class="secondary-text">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
+                <p class="secondary-text" :class="{ 'red-text': isDeadlineLockReason(card.deadline) }">Дедлайн: {{ card.deadline.toLocaleString() }}</p>
                 <p v-if="card.lastEditedTime" class="secondary-text">Отредактировано: {{ card.lastEditedTime }}</p>
                 <div v-if="card.toWorkReasons.length > 0" class="to-work-reason-container">
                     <p>Причины возврата:</p>
                     <p v-for="reason in card.toWorkReasons" class="to-work-reason">{{ reason.reason }} - {{ reason.date }}</p>
                 </div>
-                <button @click="openEditModal(index, 'thirdColumn')">Редактировать</button>
-                <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')">&lt</button>
-                <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')">&gt</button>
+                <button @click="openEditModal(index, 'thirdColumn')" v-if="!isDeadlineLocked(card.deadline)">Редактировать</button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'secondColumn')" v-if="!isDeadlineLocked(card.deadline)">&lt</button>
+                <button @click="moveCardProcessor(index, 'thirdColumn', 'fourthColumn')" v-if="!isDeadlineLocked(card.deadline)">&gt</button>
             </div>
         </div>
 
