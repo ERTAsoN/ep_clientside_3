@@ -10,6 +10,7 @@ new Vue({
         editedCardIndex: null,
         editedCardColumn: '',
         cardToWorkReason: '',
+        deadlineLock: false,
         firstColumn: [],
         secondColumn: [],
         thirdColumn: [],
@@ -182,6 +183,33 @@ new Vue({
             this.saveDataToLocalStorage();
 
             this.closeModal('cardToWorkModal');
+        },
+        checkCloseDeadline(deadline) {
+            const differenceInMs = deadline - new Date();
+            const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+
+            return differenceInDays < 2;
+        },
+        checkDeadlineLock() {
+            let deadlineLock = false;
+
+            for(const card of this.firstColumn) {
+                if (this.checkCloseDeadline(card.deadline)) {
+                    deadlineLock = true;
+                }
+            }
+            for(const card of this.secondColumn) {
+                if (this.checkCloseDeadline(card.deadline)) {
+                    deadlineLock = true;
+                }
+            }
+            for(const card of this.thirdColumn) {
+                if (this.checkCloseDeadline(card.deadline)) {
+                    deadlineLock = true;
+                }
+            }
+
+            this.deadlineLock = deadlineLock;
         }
     },
     mounted() {
