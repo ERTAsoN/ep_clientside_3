@@ -44,21 +44,6 @@ new Vue({
             this[toColumn].push(card);
         },
         addCard() {
-            if (!this.newCardTitle) {
-                alert('Заполните название задачи');
-                return;
-            }
-
-            if (!this.newCardDescription) {
-                alert('Заполните описание задачи');
-                return;
-            }
-
-            if (!this.newCardDeadline) {
-                alert('Заполните дедлайн задачи')
-                return;
-            }
-
             const newCard = {
                 id: Date.now(),
                 creationDate: new Date().toLocaleString(),
@@ -83,6 +68,9 @@ new Vue({
         },
         deleteCard(index, column) {
             this[column].splice(index, 1);
+
+            this.checkDeadlineLock();
+
             this.saveDataToLocalStorage();
         },
         saveDataToLocalStorage() {

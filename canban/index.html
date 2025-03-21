@@ -17,34 +17,40 @@
                 <h2>Добавить новую карточку</h2>
                 <button @click="closeModal('addCardModal')" class="close-modal-button">Закрыть</button>
             </div>
-            <input v-model="newCardTitle" placeholder="Название задачи" />
-            <textarea v-model="newCardDescription" placeholder="Описание задачи"></textarea>
-            <label class="date-input-label">Дедлайн<input v-model="newCardDeadline" type="datetime-local"></label>
-            <button @click="addCard">Добавить карточку</button>
+            <form @submit.prevent="addCard">
+                <input v-model="newCardTitle" placeholder="Название задачи" required>
+                <textarea v-model="newCardDescription" placeholder="Описание задачи" required></textarea>
+                <label class="date-input-label">Дедлайн<input v-model="newCardDeadline" type="datetime-local" required></label>
+                <button type="submit">Добавить карточку</button>
+            </form>
         </div>
     </div>
-
+    
     <div id="editCardModal" class="modal">
         <div class="edit-card-form">
             <div class="modal-header">
                 <h2>Редактировать карточку</h2>
                 <button @click="closeModal('editCardModal')" class="close-modal-button">Закрыть</button>
             </div>
-            <input v-model="editedCardTitle" placeholder="Название задачи" />
-            <textarea v-model="editedCardDescription" placeholder="Описание задачи"></textarea>
-            <label class="date-input-label">Дедлайн<input v-model="editedCardDeadline" type="datetime-local"></label>
-            <button @click="saveEditedCard">Сохранить изменения</button>
+            <form @submit.prevent="saveEditedCard">
+                <input v-model="editedCardTitle" placeholder="Название задачи" required>
+                <textarea v-model="editedCardDescription" placeholder="Описание задачи" required></textarea>
+                <label class="date-input-label">Дедлайн<input v-model="editedCardDeadline" type="datetime-local" required></label>
+                <button type="submit">Сохранить изменения</button>
+            </form>
         </div>
     </div>
-
+    
     <div id="cardToWorkModal" class="modal">
         <div class="edit-card-form">
             <div class="modal-header">
                 <h2>Переместить в столбец "В работе"</h2>
                 <button @click="closeModal('cardToWorkModal')" class="close-modal-button">Закрыть</button>
             </div>
-            <textarea v-model="cardToWorkReason" placeholder="Причина"></textarea>
-            <button @click="saveToWorkReason">Сохранить изменения</button>
+            <form @submit.prevent="saveToWorkReason">
+                <textarea v-model="cardToWorkReason" placeholder="Причина" required></textarea>
+                <button type="submit">Сохранить изменения</button>
+            </form>
         </div>
     </div>
 
